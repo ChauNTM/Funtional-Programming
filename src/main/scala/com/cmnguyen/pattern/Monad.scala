@@ -40,13 +40,13 @@ case class Id[A](value: A) {
 
 object Monad {
 
-  val streamMonad = new Monad[LazyList] {
+  val streamMonad: Monad[LazyList] = new Monad[LazyList] {
     override def unit[A](a: => A): LazyList[A] = LazyList(a)
 
     override def flatMap[A, B](ma: LazyList[A])(f: A => LazyList[B]): LazyList[B] = ma flatMap f
   }
 
-  val listMonad = new Monad[List] {
+  val listMonad: Monad[List] = new Monad[List] {
     override def unit[A](a: => A): List[A] = List(a)
 
     override def flatMap[A, B](ma: List[A])(f: A => List[B]): List[B] = ma flatMap f
@@ -65,9 +65,6 @@ object Monad {
     }
 
   }
-
-  val list = List[(Int, Int)]()
-  (1 -> 2) :: list
 
   /**
    * Example for applying StateMonad
