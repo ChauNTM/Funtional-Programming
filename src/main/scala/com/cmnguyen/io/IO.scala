@@ -1,6 +1,6 @@
-package io
+package com.cmnguyen.io
 
-import monad.Monad
+import com.cmnguyen.pattern.Monad
 
 import scala.io.StdIn.readLine
 
@@ -39,5 +39,4 @@ object IO extends Monad[IO]{
     _ <- PrintLine(fahrenheitToCelsius(d).toString)
   } yield()
 
-  override def doWhile[A](a: IO[A])(cond: A => IO[Boolean]): IO[Unit] = ???
 }

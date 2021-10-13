@@ -1,11 +1,14 @@
+package com.cmnguyen
+
 import java.io.File
 
-import io.IO
-import process.{Await, Emit, Halt, Process}
+import com.cmnguyen.io.IO
+import com.cmnguyen.process.{Await, Emit, Halt, Process}
 
 object Main {
 
   def main(args: Array[String]): Unit = {
+
     //    val p = Process.lift((x: Int) => x + 1)
     //    val xs = p(LazyList(1, 2, 3, 4, 5)).toList
     //    println(s"result $xs")
@@ -30,10 +33,16 @@ object Main {
     //    val zipWithIndexValue = even.zipWithIndex(LazyList(2, 4, 5, 8)).toList
     //    println(s"zipWithIndex $zipWithIndexValue")
 
-    println("Start to read file")
-    val file = new File("/Users/xyz/Downloads/main (8).txt")
-    val isMoreThan10Lines = processFile(file, Process.count1[String] |> Process.exists(_ > 51), false)(_ || _)
-    println(s"result ${isMoreThan10Lines.run}")
+    /**
+     * filePath is the path of the file need to be checked
+     * n is the number of lines
+     * result return whether the file contains more than n lines
+     */
+//    val file = new File("filePath")
+//    val n = 51
+//    val result = processFile(file, Process.count1[String] |> Process.exists(_ > n), false)(_ || _).run
+
+
 
   }
 
@@ -48,6 +57,7 @@ object Main {
           val next = if (ss.hasNext) recv(Some(ss.next())) else recv(None)
           go(ss, next, acc)
       }
+
     val s = scala.io.Source.fromFile(f)
     try go(s.getLines(), p, z)
     finally s.close()

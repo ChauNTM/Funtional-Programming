@@ -1,7 +1,6 @@
-package process
+package com.cmnguyen.process
 
-import monad.Monad
-import process.Process.{count1, lift}
+import com.cmnguyen.process.Process.{count1, lift}
 
 sealed trait Process[I, O] {
 
@@ -16,7 +15,7 @@ sealed trait Process[I, O] {
 
   def repeat: Process[I, O] = {
     def go(p: Process[I, O]): Process[I, O] = p match {
-      case Halt() => go(this) // restart the process if it halts its own
+      case Halt() => go(this) // restart the com.cmnguyen.process if it halts its own
       case Await(recv) => Await {
         case Some(i) => go(recv(Some(i)))
         case None => recv(None)
@@ -85,7 +84,7 @@ object Process {
     }.repeat
 
   /**
-   * A helper function to await an element or fall back to another process
+   * A helper function to await an element or fall back to another com.cmnguyen.process
    * if there is no input.
    */
   def await[I, O](f: I => Process[I, O],
@@ -120,7 +119,7 @@ object Process {
     go(0)
   }
 
-  // common state pattern
+  // common state com.cmnguyen.pattern
   def loop[S, I, O](z: S)(f: (I, S) => (O, S)): Process[I, O] =
     await((i: I) => f(i, z) match {
       case (o, s2) => emit(o, loop(s2)(f))
