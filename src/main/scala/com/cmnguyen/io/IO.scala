@@ -1,6 +1,7 @@
 package com.cmnguyen.io
 
-import com.cmnguyen.pattern.Monad
+
+import com.cmnguyen.pattern.applicative.Monad
 
 import scala.io.StdIn.readLine
 
