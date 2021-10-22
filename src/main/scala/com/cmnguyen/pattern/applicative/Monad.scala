@@ -1,5 +1,7 @@
 package com.cmnguyen.pattern.applicative
 
+import com.cmnguyen.State
+
 trait Monad[F[_]] extends Applicative[F] {
 
   def flatMap[A,B](ma: F[A])(f: A => F[B]): F[B] = join(map(ma)(f))
@@ -26,6 +28,13 @@ object Monad {
     override def flatMap[A, B](ma: Either[E, A])(f: A => Either[E, B]): Either[E, B] = ma flatMap f
 
   }
+
+  def stateMonad[S]: Monad[({ type f[x] = State[S, x]})#f] = new Monad[({type f[x] = State[S, x]})#f] {
+    override def unit[A](a: => A): State[S, A] = State(s => (a, s))
+
+    override def flatMap[A, B](ma: State[S, A])(f: A => State[S, B]): State[S, B] = ma flatMap f
+  }
+
 
 
 }

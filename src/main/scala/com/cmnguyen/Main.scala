@@ -3,7 +3,11 @@ package com.cmnguyen
 import java.io.File
 
 import com.cmnguyen.io.IO
+import com.cmnguyen.pattern.applicative.{Applicative, Traverse, Tree}
 import com.cmnguyen.process.{Await, Emit, Halt, Process}
+
+import scala.collection.Set
+
 
 object Main {
 
@@ -42,7 +46,26 @@ object Main {
 //    val n = 51
 //    val result = processFile(file, Process.count1[String] |> Process.exists(_ > n), false)(_ || _).run
 
+//    val listOption = List[Option[Int]](Some(1), Some(3), None, Some(12))
+//    val optionList = Traverse.listTraverse.sequence(listOption)(Applicative.optionApplicative)
+//    println(s"result optionList $optionList")
 
+    val tree = Tree("hello", List(Tree("java", List()), Tree("kotlin", List())))
+    val treeToList = Traverse.treeTraverse.toList(tree)
+    val zipWithIndex = Traverse.treeTraverse.zipWithIndex1(tree)
+    val reverseTree = Traverse.treeTraverse.reverse(tree)
+    println(s"treeToList $treeToList")
+    println(s"zipWithIndex $zipWithIndex")
+    println(s"reverseTree $reverseTree")
+
+    val x = List(1, 2, 4 , 19)
+    val y = List(-12, -2, -4 , -109)
+    println(s"toList(reverse(x)) ++ toList(reverse(y)) ${Traverse.listTraverse.toList(Traverse.listTraverse.reverse(x)) ++ Traverse.listTraverse.toList(Traverse.listTraverse.reverse(y))}")
+    println(s"reverse(toList(y) ++ toList(y)) ${Traverse.listTraverse.reverse(Traverse.listTraverse.toList(y) ++ Traverse.listTraverse.toList(x))}")
+
+    // Test with Traverse.traverse
+    val listOption = Traverse.listTraverse.traverse(x)(a => Applicative.listApplicative.unit(a))(Applicative.listApplicative)
+    println(s"listOption = $listOption")
 
   }
 

@@ -1,6 +1,7 @@
-package com.cmnguyen.pattern
+package com.cmnguyen.pattern.monad
 
 import com.cmnguyen.State
+import com.cmnguyen.pattern.applicative
 
 trait Monad[F[_]] {
 
